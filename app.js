@@ -4,7 +4,7 @@ var app = express();
 
 var counter = 0;
 app.get('/', function (req, res) {
-    res.send('Requests count: ' + ++counter);
+    res.send('Hello, World! <br> Requests count: ' + ++counter);
 })
 
 
