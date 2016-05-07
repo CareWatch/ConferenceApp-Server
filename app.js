@@ -6,12 +6,12 @@ var path = require('path');
 var config = require('./config');
 var app = express();
 
-https.createServer(config.get('ssl_config'), app).listen(config.get('https_port'));
+https.createServer(config.sslOptions, app).listen(config.sslPort);
 
 http.createServer(function (req, res) {
     res.writeHead(301, { "Location": "https://" + req.headers['host'] + req.url });
     res.end();
-}).listen(config.get('port'));
+}).listen(config.port);
 
 
 var counter = 0;
