@@ -2,8 +2,8 @@ var fs = require('fs');
 
 var config = {};
 
-config.port = 3001;
-config.sslPort = 443;
+config.port = 3000;
+config.sslPort = 3001;
 
 var sslOptions = {
     ca: fs.readFileSync('/etc/ssl/keys/server.ca-bundle'),
