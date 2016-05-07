@@ -2,7 +2,7 @@ var fs = require('fs');
 
 var config = {};
 
-config.port = 3000;
+config.port = 3001;
 config.sslPort = 443;
 
 var sslOptions = {
