@@ -1,13 +1,14 @@
-var express = require('express');
-var https = require('https');
-var http = require('http');
-var path = require('path');
-var config = require('./config');
-var app = express();
+'use strict';
 
+var express = require('express'),
+    https = require('https'),
+    http = require('http'),
+    config = require('./config'),
+    app = express();
 
-
-https.createServer(config.sslOptions, app).listen(config.sslPort);
+https.createServer(config.sslOptions, app).listen(config.sslPort), function () {
+    console.log('Server is online and running!');
+};
 
 http.createServer(function (req, res) {
     res.writeHead(301, { "Location": "https://" + req.headers['host'] + req.url });
@@ -18,7 +19,7 @@ var counter = 0;
 
 app.get('/', function (req, res) {
     res.send('Hello, World! <br> Requests count: ' + ++counter);
-})
+});
 
 app.get('/api', function (req, res) {
     res.send('API is running');
@@ -26,5 +27,5 @@ app.get('/api', function (req, res) {
 
 app.use(function (req, res) {
     res.status(404).send("Page Not Found");
-})
+});
 
