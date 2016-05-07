@@ -1,0 +1,8 @@
+{
+  "name": "conferenceapp-api-host",
+  "version": "0.0.1",
+  "main": "app.js",
+  "dependencies": {
+    "express": "~4.9.8"
+  }
+}
