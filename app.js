@@ -1,6 +1,18 @@
+var fs = require('fs');
 var express = require('express');
+var https = require('https');
+var http = require('http');
 var path = require('path');
+var config = require('./config');
 var app = express();
+
+https.createServer(config.get('ssl_config'), app).listen(config.get('https_port'));
+
+http.createServer(function (req, res) {
+    res.writeHead(301, { "Location": "https://" + req.headers['host'] + req.url });
+    res.end();
+}).listen(config.get('port'));
+
 
 var counter = 0;
 app.get('/', function (req, res) {
@@ -16,7 +28,3 @@ app.use(function (req, res) {
     res.status(404).send("Page Not Found");
 })
 
-
-app.listen(3000, function(){
-    console.log('Express server listening on port 3000');
-});

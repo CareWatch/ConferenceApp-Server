@@ -1,0 +1,10 @@
+{
+  "port" : 3000,
+  "https_port" : 443,
+  "ssl_config": {
+    "ca" : "/etc/ssl/keys/server.ca-bundle",
+    "key" : "/etc/ssl/keys/server.key",
+    "cert" : "/etc/ssl/keys/server.crt",
+    "passphrase" : ""
+  }
+}
