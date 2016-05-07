@@ -1,4 +1,3 @@
-var fs = require('fs');
 var express = require('express');
 var https = require('https');
 var http = require('http');
@@ -13,12 +12,11 @@ http.createServer(function (req, res) {
     res.end();
 }).listen(config.port);
 
-
 var counter = 0;
+
 app.get('/', function (req, res) {
     res.send('Hello, World! <br> Requests count: ' + ++counter);
 })
-
 
 app.get('/api', function (req, res) {
     res.send('API is running');
