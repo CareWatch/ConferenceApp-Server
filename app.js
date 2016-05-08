@@ -6,8 +6,8 @@ var express = require('express'),
     config = require('./configuration'),
     morgan = require('morgan'),
     routes = require('./routes/index'),
-    users = require('./routes/users'),
-    fs = require('fs');
+    api = require('./routes/api'),
+    fs = require('fs'),
     app = express();
 
 
@@ -23,7 +23,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
-app.use('/users', users);
+app.use('/api', api);
 
 
 app.use(function(req, res, next) {
