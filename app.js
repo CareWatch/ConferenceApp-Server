@@ -8,6 +8,7 @@ var express = require('express'),
     routes = require('./routes/index'),
     api = require('./routes/api'),
     fs = require('fs'),
+    log = require('./libs/logger'),
     app = express();
 
 
@@ -38,6 +39,7 @@ app.use(function(req, res, next) {
 // will print stacktrace
 if (app.get('env') === 'development') {
   app.use(function(err, req, res, next) {
+    log.error('%s %d %s', req.method, res.statusCode, err.message);
     res.status(err.status || 500);
     res.render('error', {
       message: err.message,
@@ -49,6 +51,7 @@ if (app.get('env') === 'development') {
 // production error handler
 // no stacktraces leaked to user
 app.use(function(err, req, res, next) {
+  log.error('%s %d %s', req.method, res.statusCode, err.message);
   res.status(err.status || 500);
   res.render('error', {
     message: err.message,
