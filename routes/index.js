@@ -1,6 +1,10 @@
+var registration = require('./registration');
 module.exports = function (app) {
     var counter = 0;
     var apiPath = '/api';
+
+    app.get(apiPath + '/register', registration.requestRegistration);
+
 
     app.get(apiPath + '/test', function (req, res) {
         res.send('Hello, World! <br> Requests count: ' + ++counter);
