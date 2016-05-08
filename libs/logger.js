@@ -8,7 +8,7 @@ function logger(module) {
         transports : [
             new winston.transports.File({
                 level: 'info',
-                filename: process.cwd() + '/logs/all.log',
+                filename: '/logs/all.log',
                 handleException: true,
                 json: true,
                 maxSize: 5242880, //5mb 

@@ -8,7 +8,7 @@ var express = require('express'),
     routes = require('./routes/index'),
     api = require('./routes/api'),
     fs = require('fs'),
-    log = require('./libs/logger'),
+    log = require('./libs/logger')(module),
     app = express();
 
 
