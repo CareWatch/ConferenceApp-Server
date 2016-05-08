@@ -4,7 +4,7 @@ var config = {};
 
 config.port = 3000;
 config.sslPort = 3001;
-
+/*
 var sslOptions = {
     ca: fs.readFileSync('/etc/ssl/keys/server.ca-bundle'),
     key: fs.readFileSync('/etc/ssl/keys/server.key'),
@@ -13,7 +13,7 @@ var sslOptions = {
 };
 
 config.sslOptions = sslOptions;
-
+ */
 module.exports = config;
 
 
