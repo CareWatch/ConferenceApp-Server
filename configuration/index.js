@@ -19,7 +19,6 @@ config.logPath = '../logs/app.log';
 */
 
 config.dbString = '';
-
 module.exports = config;
 
 
