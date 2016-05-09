@@ -6,8 +6,6 @@ router.get('/', function(req, res, next) {
     res.send('api test');
 });
 
-router.post('/signup', function (req, res, next) {
-    auth.register(req, res, next);
-});
+router.post('/signup', auth.register);
 
 module.exports = router;
