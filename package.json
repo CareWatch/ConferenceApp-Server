@@ -18,7 +18,8 @@
     "mysql": "^3.3.0",
     "q": "^1.4.1",
     "serve-favicon": "~2.3.0",
-    "winston": "^2.2.0"
+    "winston": "^2.2.0",
+    "mssql": "latest"
   },
   "repository": {
     "type": "git",

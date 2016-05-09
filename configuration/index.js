@@ -16,17 +16,9 @@ config.logPath = '../logs/app.log';
  };
 
  config.sslOptions = sslConfiguration;
- */
+*/
 
-var databaseConfiguration = {
-    userName: '',
-    password: '',
-    server: '',
-    database: 'ConferenceAppDB',
-    port: 1433
-};
-
-config.databaseConfiguration = databaseConfiguration;
+config.dbString = '';
 
 module.exports = config;
 
