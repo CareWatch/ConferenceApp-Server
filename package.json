@@ -19,7 +19,8 @@
     "mssql": "latest",
     "q": "^1.4.1",
     "serve-favicon": "~2.3.0",
-    "winston": "^2.2.0"
+    "winston": "^2.2.0",
+    "jsonwebtoken": "latest"
   },
   "repository": {
     "type": "git",

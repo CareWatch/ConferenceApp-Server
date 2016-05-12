@@ -16,14 +16,6 @@ function getConnection() {
     return deferred.promise;
 }
 
-function prepareQuery(query, parameters){
-    if(!query || !parameters) {
-        throw  new Error('Query and parameters function parameters should be specified.');
-    }
-    return sql.format(query, parameters);
-}
-
 module.exports = {
-    getConnection : getConnection,
-    prepareQuery: prepareQuery
+    getConnection : getConnection
 };

@@ -19,6 +19,7 @@ config.logPath = '../logs/app.log';
 */
 
 config.dbString = '';
+config.jwtSecret = '';
 module.exports = config;
 
 
