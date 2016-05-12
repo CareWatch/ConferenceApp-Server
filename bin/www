@@ -11,6 +11,7 @@ var port = config.port;
 
 var server = http.createServer(app);
 
+
 /*
  https.createServer(config.sslConfiguration, app).listen(config.sslPort), function () {
  console.log('Server is online and running!');
