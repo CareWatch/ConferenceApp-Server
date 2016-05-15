@@ -15,8 +15,8 @@ config.sslKey = fs.readFileSync('/etc/ssl/keys/server.key');
 config.sslCert = fs.readFileSync('/etc/ssl/keys/server.crt');
 config.sslPassphrase = '';
 */
-config.dbString = 'mssql://bulgakov:4jiFE604336pKPxg2s5Q5772D3366mK@confappdb.ceml2u1mwzx0.eu-central-1.rds.amazonaws.com/ConferenceAppDB';
-config.jwtSecret = 'hello';
+config.dbString = '';
+config.jwtSecret = '';
 
 module.exports = config;
 
