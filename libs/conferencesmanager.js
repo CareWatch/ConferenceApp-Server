@@ -30,11 +30,11 @@ function getConferenceInfo(id) {
         .then(function (connection) {
             new connection.Request()
                 .input('SelectedConferenceId', sql.Int, id)
+                .input('FilterPhotoTypeId', sql.Int, 1)
                 .execute('GetConferenceInfo')
                 .then(function (res) {
                     var converted = convertRecords(res);
                     if (converted === null) {
-                        console.log('here');
                         deferred.reject(new TypeError('No conference with such id found in database'));
                     }
                     else {
@@ -68,11 +68,11 @@ function convertRecords(records) {
     conference.PhotoIDs = [];
     conference.SpeechIDs = [];
     for (var i in records[0]) {
-        if (conference.PhotoIDs.indexOf(records[0][i].ConferencePhotoId) === -1) {
+        if (conference.PhotoIDs.indexOf(records[0][i].ConferencePhotoId) === -1 && records[0][i].ConferencePhotoId != null) {
             conference.PhotoIDs.push(records[0][i].ConferencePhotoId);
         }
 
-        if (conference.SpeechIDs.indexOf(records[0][i].SpeechId) === -1) {
+        if (conference.SpeechIDs.indexOf(records[0][i].SpeechId) === -1 && records[0][i].SpeechId != null) {
             conference.SpeechIDs.push(records[0][i].SpeechId);
         }
     }
