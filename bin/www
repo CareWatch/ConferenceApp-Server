@@ -1,29 +1,29 @@
 #!/usr/bin/env node
 
-var app = require('../app');
-var config = require('../configuration');
-var debug = require('debug')('ConferenceApp-Server:server');
-var http = require('http');
+var app = require('../app'),
+    config = require('../configuration'),
+    debug = require('debug')('ConferenceApp-Server:server'),
+    http = require('http'),
+    https = require('https');
 
 var port = config.port;
-//app.set('port', port);
 
+//var server = http.createServer(app);
 
-var server = http.createServer(app);
+var server = https.createServer({
+  ca: config.sslCa,
+  key: config.sslKey,
+  cert: config.sslCert,
+  passphrase: config.sslPassphrase
+}, app);
 
-
-/*
- https.createServer(config.sslConfiguration, app).listen(config.sslPort), function () {
- console.log('Server is online and running!');
- };
-
- http.createServer(function (req, res) {
+http.createServer(function (req, res) {
  res.writeHead(301, { "Location": "https://" + req.headers['host'] + req.url });
  res.end();
- }).listen(config.port);
-*/
+}).listen(config.port);
 
-server.listen(port);
+
+server.listen(config.sslPort);
 server.on('error', onError);
 server.on('listening', onListening);
 

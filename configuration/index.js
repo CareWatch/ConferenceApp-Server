@@ -1,25 +1,19 @@
-var fs = require('fs');
-
-var config = {};
+var fs = require('fs'),
+    config = {};
 
 config.port = 3000;
 config.sslPort = 3001;
 
-config.logPath = '../logs/app.log';
+config.logPath = '../logs/access.log';
 
-/*
- var sslConfiguration = {
- ca: fs.readFileSync('/etc/ssl/keys/server.ca-bundle'),
- key: fs.readFileSync('/etc/ssl/keys/server.key'),
- cert: fs.readFileSync('/etc/ssl/keys/server.crt'),
- passphrase: process.env.PH_KEY || ''
- };
-
- config.sslOptions = sslConfiguration;
-*/
+config.sslCa = fs.readFileSync('/etc/ssl/keys/server.ca-bundle');
+config.sslKey = fs.readFileSync('/etc/ssl/keys/server.key');
+config.sslCert = fs.readFileSync('/etc/ssl/keys/server.crt');
+config.sslPassphrase = '';
 
 config.dbString = '';
 config.jwtSecret = '';
+
 module.exports = config;
 
 
