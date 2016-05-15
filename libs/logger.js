@@ -11,7 +11,7 @@ function logger(module) {
                 filename: '/logs/all.log',
                 handleException: true,
                 json: true,
-                maxSize: 5242880, //5mb 
+                maxSize: 5242880,  
                 maxFiles: 2,
                 colorize: false
             }),
