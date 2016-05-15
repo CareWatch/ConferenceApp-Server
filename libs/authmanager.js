@@ -8,7 +8,7 @@ function addUser(username, passwordHash) {
     db.getConnection()
         .then(function (connection) {
             var request = new connection.Request();
-            var command = "INSERT INTO UserCredentials(Login, PasswordHash) VALUES ('" + username + "', '" + passwordHash + "')";
+            var command = "INSERT INTO UserCredentials(UserLogin, PasswordHash) VALUES ('" + username + "', '" + passwordHash + "')";
             request.query(command, function (err, res) {
                if (err) {
                    deferred.reject(err);
@@ -30,7 +30,7 @@ function getPassHash(username) {
     db.getConnection()
         .then(function (connection) {
             var request = new connection.Request();
-            var command = "SELECT PasswordHash, UserId FROM UserCredentials WHERE Login = '" + username + "'";
+            var command = "SELECT PasswordHash, UserId FROM UserCredentials WHERE UserLogin = '" + username + "'";
             request.query(command, function (err, res) {
                 if (err) {
                     deferred.reject(err);
