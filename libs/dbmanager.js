@@ -10,7 +10,6 @@ function getConnection() {
             log.error(err);
             deferred.reject(err);
         }
-        //log.debug('Connection established!');
         deferred.resolve(sql);
     });
     return deferred.promise;

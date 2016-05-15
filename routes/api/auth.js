@@ -1,7 +1,7 @@
 var authmanager = require('../../libs/authmanager'),
     bcrypt = require('bcrypt'),
     log = require('../../libs/logger')(module),
-    config = require('../../configuration');
+    config = require('../../configuration'),
     jwt = require('jsonwebtoken');
 
 function register (req, res, next){
