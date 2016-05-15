@@ -13,4 +13,7 @@ router.post('/login', auth.login);
 
 router.get('/conference', conference.getConferences);
 
+router.get('/conference/:id', conference.getConferenceInfo);
+
+
 module.exports = router;
