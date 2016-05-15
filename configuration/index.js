@@ -5,7 +5,10 @@ var fs = require('fs'),
 config.port = 3000;
 config.sslPort = 3001;
 
-config.logPath = appRoot + '/logs/access.log';
+config.appRoot = appRoot;
+
+config.accessLogsPath = appRoot + '/logs/access.log';
+config.loggerLogsPath = appRoot + '/logs/app.log';
 
 config.sslCa = fs.readFileSync('/etc/ssl/keys/server.ca-bundle');
 config.sslKey = fs.readFileSync('/etc/ssl/keys/server.key');

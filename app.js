@@ -12,7 +12,7 @@ var express = require('express'),
     app = express();
 
 
-var accessLogStream = fs.createWriteStream(config.logPath, {flags: 'a'});
+var accessLogStream = fs.createWriteStream(config.accessLogsPath, {flags: 'a'});
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
