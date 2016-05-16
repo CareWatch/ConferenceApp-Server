@@ -19,7 +19,8 @@ router.post('/conferences/:id/unattend', auth.checkAuth, conference.unsubscribe)
 
 
 router.get('/speeches/:id', speech.getInfo);
-//router.get('/speeches/:id/comments', speech.ge);
+router.get('/speeches/:id/comments', speech.getComments);
+
 
 router.use(common.notFoundError);
 router.use(common.otherError);
