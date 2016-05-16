@@ -1,13 +1,11 @@
 var sql = require('mssql'),
     q = require('q'),
-    config = require('../configuration'),
-    log = require('./logger')(module);
+    config = require('../configuration');
 
 function getConnection() {
     var deferred = q.defer();
     sql.connect(config.dbString, function (err) {
         if (err) {
-            log.error(err);
             deferred.reject(err);
         }
         deferred.resolve(sql);

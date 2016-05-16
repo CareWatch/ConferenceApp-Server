@@ -1,6 +1,5 @@
 var db = require('./dbmanager'),
     q = require('q'),
-    log = require('./logger')(module),
     sql = require('mssql');
 
 function getConferences() {
@@ -14,9 +13,11 @@ function getConferences() {
                 .then(function (res) {
                     deferred.resolve(res);
                 })
+                .catch(function (err) {
+                    deferred.reject(err);
+                })
         })
         .fail(function (err) {
-            log.error(err);
             deferred.reject(err);
         });
 
@@ -41,9 +42,11 @@ function getConferenceInfo(conferenceId) {
                         deferred.resolve(converted);
                     }
                 })
+                .catch(function (err) {
+                    deferred.reject(err);
+                })
         })
         .fail(function (err) {
-            log.error(err);
             deferred.reject(err);
         });
 
@@ -64,12 +67,10 @@ function addConferenceAttender(userId, conferenceId) {
                     deferred.resolve(records);
                 })
                 .catch(function (err) {
-                    log.error(err);
                     deferred.reject(err);
                 })
         })
         .fail(function (err) {
-            log.error(err);
             deferred.reject(err);
         });
 
@@ -90,12 +91,10 @@ function removeConferenceAttender(userId, conferenceId) {
                     deferred.resolve(records);
                 })
                 .catch(function (err) {
-                    log.error(err);
                     deferred.reject(err);
                 })
         })
         .fail(function (err) {
-            log.error(err);
             deferred.reject(err);
         });
 

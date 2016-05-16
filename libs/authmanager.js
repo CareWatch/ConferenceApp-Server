@@ -1,6 +1,5 @@
 var db = require('./dbmanager'),
-    q = require('q'),
-    log = require('./logger')(module);
+    q = require('q');
 
 function addUser(username, passwordHash) {
     var deferred = q.defer();
@@ -17,7 +16,6 @@ function addUser(username, passwordHash) {
             });
         })
         .fail(function (err) {
-            log.error(err);
             deferred.reject(err);
         });
 
@@ -44,7 +42,6 @@ function getPassHash(username) {
             });
         })
         .fail(function (err) {
-            log.error(err);
             deferred.reject(err);
         });
 
