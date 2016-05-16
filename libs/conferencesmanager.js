@@ -77,6 +77,32 @@ function addConferenceAttender(userId, conferenceId) {
 }
 
 
+function removeConferenceAttender(userId, conferenceId) {
+    var deferred = q.defer();
+
+    db.getConnection()
+        .then(function (connection) {
+            new connection.Request()
+                .input('SelectedConferenceId', sql.Int, conferenceId)
+                .input('SelectedUserId', sql.Int, userId)
+                .execute('RemoveConferenceAttender')
+                .then(function (records) {
+                    deferred.resolve(records);
+                })
+                .catch(function (err) {
+                    log.error(err);
+                    deferred.reject(err);
+                })
+        })
+        .fail(function (err) {
+            log.error(err);
+            deferred.reject(err);
+        });
+
+    return deferred.promise;
+}
+
+
 
 
 function convertRecords(records) {
@@ -112,5 +138,6 @@ function convertRecords(records) {
 module.exports = {
     getConferences : getConferences,
     getConferenceInfo : getConferenceInfo,
-    addConferenceAttender : addConferenceAttender
+    addConferenceAttender : addConferenceAttender,
+    removeConferenceAttender : removeConferenceAttender
 };

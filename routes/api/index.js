@@ -18,5 +18,6 @@ router.get('/conferences/:id', conference.getConferenceInfo);
 
 router.post('/conferences/:id/attend', conference.subscribeConference);
 
+router.post('/conferences/:id/unattend', conference.unsubscribeConference);
 
 module.exports = router;
