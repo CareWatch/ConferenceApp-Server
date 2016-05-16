@@ -1,8 +1,8 @@
-var express = require('express'),
-    router = express.Router(),
-    auth = require('./auth'),
-    conference = require('./conference'),
-    log = require('../../libs/logger')(module);
+var express = require('express');
+var router = express.Router();
+var auth = require('./auth');
+var conference = require('./conference');
+var log = require('../../libs/logger')(module);
 
 router.get('/', function(req, res) {
     res.send('api test');

@@ -1,6 +1,6 @@
-var sql = require('mssql'),
-    q = require('q'),
-    config = require('../configuration');
+var sql = require('mssql');
+var q = require('q');
+var config = require('../configuration');
 
 function getConnection() {
     var deferred = q.defer();

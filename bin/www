@@ -1,10 +1,9 @@
 #!/usr/bin/env node
 
-var app = require('../app'),
-    config = require('../configuration'),
-    debug = require('debug')('ConferenceApp-Server:server'),
-    http = require('http'),
-    https = require('https');
+var app = require('../app');
+var config = require('../configuration');
+var http = require('http');
+var https = require('https');
 
 var port = config.port;
 
@@ -57,5 +56,5 @@ function onListening() {
   var bind = typeof addr === 'string'
     ? 'pipe ' + addr
     : 'port ' + addr.port;
-  debug('Listening on ' + bind);
+  console.log('Listening on ' + bind);
 }

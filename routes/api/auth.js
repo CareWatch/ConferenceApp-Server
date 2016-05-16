@@ -1,7 +1,7 @@
-var authmanager = require('../../libs/authmanager'),
-    bcrypt = require('bcrypt'),
-    config = require('../../configuration'),
-    jwt = require('jsonwebtoken');
+var authmanager = require('../../libs/authmanager');
+var bcrypt = require('bcrypt');
+var config = require('../../configuration');
+var jwt = require('jsonwebtoken');
 
 function register (req, res, next){
     if (!req.body.username || !req.body.password) {

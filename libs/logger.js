@@ -1,5 +1,5 @@
-var winston = require('winston'),
-    config = require('../configuration');
+var winston = require('winston');
+var config = require('../configuration');
 
 winston.emitErrs = true;
 
@@ -29,7 +29,6 @@ function logger(module) {
 }
 
 function getFilePath (module ) {
-    //using filename in log statements
     return module.filename.split('/').slice(-2).join('/');
 }
 

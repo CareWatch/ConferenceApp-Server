@@ -1,6 +1,6 @@
-var confmanager = require('../../libs/conferencesmanager'),
-    jwt = require('jsonwebtoken'),
-    config = require('../../configuration');
+var confmanager = require('../../libs/conferencesmanager');
+var jwt = require('jsonwebtoken');
+var config = require('../../configuration');
 
 function getConferences (req, res, next) {
     confmanager.getConferences()

@@ -1,5 +1,5 @@
-var db = require('./dbmanager'),
-    q = require('q');
+var db = require('./dbmanager');
+var q = require('q');
 
 function addUser(username, passwordHash) {
     var deferred = q.defer();
@@ -35,8 +35,7 @@ function getPassHash(username) {
                 }
                 if (res.length === 1) {
                     deferred.resolve(res);
-                }
-                else {
+                } else {
                     deferred.reject(new TypeError('No user found in database'));
                 }
             });

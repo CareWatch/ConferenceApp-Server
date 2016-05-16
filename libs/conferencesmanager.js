@@ -1,6 +1,6 @@
-var db = require('./dbmanager'),
-    q = require('q'),
-    sql = require('mssql');
+var db = require('./dbmanager');
+var q = require('q');
+var sql = require('mssql');
 
 function getConferences() {
     var deferred = q.defer();

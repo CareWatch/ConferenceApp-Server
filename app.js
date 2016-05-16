@@ -1,15 +1,15 @@
-var express = require('express'),
-    path = require('path'),
-    favicon = require('serve-favicon'),
-    logger = require('morgan'),
-    bodyParser = require('body-parser'),
-    config = require('./configuration'),
-    morgan = require('morgan'),
-    routes = require('./routes/index'),
-    api = require('./routes/api'),
-    fs = require('fs'),
-    log = require('./libs/logger')(module),
-    app = express();
+var express = require('express');
+var path = require('path');
+var favicon = require('serve-favicon');
+var logger = require('morgan');
+var bodyParser = require('body-parser');
+var config = require('./configuration');
+var morgan = require('morgan');
+var routes = require('./routes/index');
+var api = require('./routes/api');
+var fs = require('fs');
+var log = require('./libs/logger')(module);
+var app = express();
 
 
 var accessLogStream = fs.createWriteStream(config.accessLogsPath, {flags: 'a'});
