@@ -23,13 +23,13 @@ function getConferences() {
     return deferred.promise;
 }
 
-function getConferenceInfo(id) {
+function getConferenceInfo(conferenceId) {
     var deferred = q.defer();
 
     db.getConnection()
         .then(function (connection) {
             new connection.Request()
-                .input('SelectedConferenceId', sql.Int, id)
+                .input('SelectedConferenceId', sql.Int, conferenceId)
                 .input('FilterPhotoTypeId', sql.Int, 1)
                 .execute('GetConferenceInfo')
                 .then(function (res) {
@@ -49,6 +49,35 @@ function getConferenceInfo(id) {
 
     return deferred.promise;
 }
+
+function addConferenceAttender(userId, conferenceId) {
+    var deferred = q.defer();
+
+    db.getConnection()
+        .then(function (connection) {
+            new connection.Request()
+                .input('SelectedConferenceId', sql.Int, conferenceId)
+                .input('SelectedUserId', sql.Int, userId)
+                .input('SelectedUserRoleId', sql.Int, 1)
+                .execute('AddConferenceAttender')
+                .then(function (records) {
+                    deferred.resolve(records);
+                })
+                .catch(function (err) {
+                    log.error(err);
+                    deferred.reject(err);
+                })
+        })
+        .fail(function (err) {
+            log.error(err);
+            deferred.reject(err);
+        });
+
+    return deferred.promise;
+}
+
+
+
 
 function convertRecords(records) {
     var conference = {};
@@ -82,5 +111,6 @@ function convertRecords(records) {
 
 module.exports = {
     getConferences : getConferences,
-    getConferenceInfo : getConferenceInfo
+    getConferenceInfo : getConferenceInfo,
+    addConferenceAttender : addConferenceAttender
 };

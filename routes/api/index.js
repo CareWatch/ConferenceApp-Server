@@ -11,9 +11,12 @@ router.post('/signup', auth.register);
 
 router.post('/login', auth.login);
 
-router.get('/conference', conference.getConferences);
 
-router.get('/conference/:id', conference.getConferenceInfo);
+router.get('/conferences', conference.getConferences);
+
+router.get('/conferences/:id', conference.getConferenceInfo);
+
+router.post('/conferences/:id/attend', conference.subscribeConference);
 
 
 module.exports = router;

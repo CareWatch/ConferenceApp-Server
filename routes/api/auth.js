@@ -32,7 +32,6 @@ function login (req, res, next) {
             .then(function (data) {
                 if (bcrypt.compareSync(req.body.password, data[0].PasswordHash))
                 {
-                    console.log(data);
                     var usertoken = jwt.sign(data[0].UserId, config.jwtSecret);
                     res.status(201).json({success: true, message: 'Logged into account: ' + req.body.username, token: usertoken});
                 } else {
