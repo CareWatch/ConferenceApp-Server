@@ -11,7 +11,7 @@ function getConferences (req, res, next) {
         });
 }
 
-function getConferenceInfo(req, res, next) {
+function getInfo(req, res, next) {
     if (isNaN(req.params.id)) {
         next(common.createError('Wrong conference id.', 400));
     } else {
@@ -30,7 +30,7 @@ function getConferenceInfo(req, res, next) {
     }
 }
 
-function subscribeConference(req, res, next) {
+function subscribe(req, res, next) {
     if (isNaN(req.params.id)) {
         next(common.createError('Wrong conference id. ' + req.params.id, 400));
     } else {
@@ -48,7 +48,7 @@ function subscribeConference(req, res, next) {
     }
 }
 
-function unsubscribeConference(req, res, next)  {
+function unsubscribe(req, res, next)  {
     if (isNaN(req.params.id)) {
         next(common.createError('Wrong conference id. ' + req.params.id, 400));
     } else {
@@ -69,7 +69,7 @@ function unsubscribeConference(req, res, next)  {
 
 module.exports = {
     getConferences: getConferences,
-    getConferenceInfo: getConferenceInfo,
-    subscribeConference: subscribeConference,
-    unsubscribeConference: unsubscribeConference
+    getInfo: getInfo,
+    subscribe: subscribe,
+    unsubscribe: unsubscribe
 };

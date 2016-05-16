@@ -1,7 +1,7 @@
 var speechmanager = require('../../libs/speechmanager');
 var common = require('./common');
 
-function getSpeechInfo(req, res, next) {
+function getInfo(req, res, next) {
     if (isNaN(req.params.id)) {
         next(createError('Wrong conference id.', 400));
     } else {
@@ -21,5 +21,5 @@ function getSpeechInfo(req, res, next) {
 }
 
 module.exports = {
-    getSpeechInfo: getSpeechInfo
+    getInfo: getInfo
 };

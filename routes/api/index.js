@@ -13,13 +13,13 @@ router.post('/login', auth.login);
 
 
 router.get('/conferences', conference.getConferences);
-router.get('/conferences/:id', conference.getConferenceInfo);
-router.post('/conferences/:id/attend', auth.checkAuth, conference.subscribeConference);
-router.post('/conferences/:id/unattend', auth.checkAuth, conference.unsubscribeConference);
+router.get('/conferences/:id', conference.getInfo);
+router.post('/conferences/:id/attend', auth.checkAuth, conference.subscribe);
+router.post('/conferences/:id/unattend', auth.checkAuth, conference.unsubscribe);
 
 
-router.get('/speeches/:id', speech.getSpeechInfo);
-
+router.get('/speeches/:id', speech.getInfo);
+//router.get('/speeches/:id/comments', speech.ge);
 
 router.use(common.notFoundError);
 router.use(common.otherError);
