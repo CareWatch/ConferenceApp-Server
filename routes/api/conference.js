@@ -1,4 +1,5 @@
 var confmanager = require('../../libs/conferencemanager');
+var common = require('./common');
 
 function getConferences (req, res, next) {
     confmanager.getConferences()
@@ -12,7 +13,7 @@ function getConferences (req, res, next) {
 
 function getConferenceInfo(req, res, next) {
     if (isNaN(req.params.id)) {
-        next(createError('Wrong conference id.', 400));
+        next(common.createError('Wrong conference id.', 400));
     } else {
         confmanager.getConferenceInfo(req.params.id)
             .then(function (data) {
@@ -21,7 +22,7 @@ function getConferenceInfo(req, res, next) {
             .fail(function (err) {
                 if (err instanceof TypeError)
                 {
-                    next(createError('No conference found with id: ' + req.params.id, 400));
+                    next(common.createError('No conference found with id: ' + req.params.id, 400));
                 } else {
                     next(err);
                 }
@@ -31,7 +32,7 @@ function getConferenceInfo(req, res, next) {
 
 function subscribeConference(req, res, next) {
     if (isNaN(req.params.id)) {
-        next(createError('Wrong conference id. ' + req.params.id, 400));
+        next(common.createError('Wrong conference id. ' + req.params.id, 400));
     } else {
         confmanager.addConferenceAttender(req.body.UserId, req.params.id)
             .then(function () {
@@ -39,7 +40,7 @@ function subscribeConference(req, res, next) {
             })
             .fail(function (err) {
                 if (err.code === 'EREQUEST') {
-                    next(createError('User info needs to be filled before applying any conference.' + req.params.id, 422));
+                    next(common.createError('User info needs to be filled before applying any conference.' + req.params.id, 422));
                 } else {
                     next(err);
                 }
@@ -49,7 +50,7 @@ function subscribeConference(req, res, next) {
 
 function unsubscribeConference(req, res, next)  {
     if (isNaN(req.params.id)) {
-        next(createError('Wrong conference id. ' + req.params.id, 400));
+        next(common.createError('Wrong conference id. ' + req.params.id, 400));
     } else {
         confmanager.removeConferenceAttender(req.body.UserId, req.params.id)
             .then(function () {
@@ -57,7 +58,7 @@ function unsubscribeConference(req, res, next)  {
             })
             .fail(function (err) {
                 if (err.code === 'EREQUEST') {
-                    next(createError('User info needs to be filled before applying any conference.', 422));
+                    next(common.createError('User info needs to be filled before applying any conference.', 422));
                 } else {
                     next(err);
                 }
@@ -65,11 +66,6 @@ function unsubscribeConference(req, res, next)  {
     }
 }
 
-function createError(message, status) {
-    var err = new Error(message);
-    err.status = status;
-    return err;
-}
 
 module.exports = {
     getConferences: getConferences,
