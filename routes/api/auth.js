@@ -56,7 +56,7 @@ function chechAuth (req, res, next) {
             if (err) {
                 next(common.createError('User authentication failed. Provide valid authtoken.', 401));
             } else {
-                req.body.UserId = decodedUserId;
+                req.body.userId = decodedUserId;
                 next();
             }
         })

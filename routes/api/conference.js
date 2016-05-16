@@ -34,7 +34,7 @@ function subscribe(req, res, next) {
     if (isNaN(req.params.id)) {
         next(common.createError('Wrong conference id. ' + req.params.id, 400));
     } else {
-        confmanager.addConferenceAttender(req.body.UserId, req.params.id)
+        confmanager.addConferenceAttender(req.body.userId, req.params.id)
             .then(function () {
                 res.status(200).json({success: true, message: 'Successfully added user to conference: ' + req.params.id});
             })
@@ -52,7 +52,7 @@ function unsubscribe(req, res, next)  {
     if (isNaN(req.params.id)) {
         next(common.createError('Wrong conference id. ' + req.params.id, 400));
     } else {
-        confmanager.removeConferenceAttender(req.body.UserId, req.params.id)
+        confmanager.removeConferenceAttender(req.body.userId, req.params.id)
             .then(function () {
                 res.status(200).json({success: true, message: 'Successfully removed user from conference: '});
             })
