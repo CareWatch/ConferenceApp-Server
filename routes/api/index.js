@@ -17,9 +17,9 @@ router.get('/conferences', conference.getConferences);
 
 router.get('/conferences/:id', conference.getConferenceInfo);
 
-router.post('/conferences/:id/attend', conference.subscribeConference);
+router.post('/conferences/:id/attend', auth.checkAuth, conference.subscribeConference);
 
-router.post('/conferences/:id/unattend', conference.unsubscribeConference);
+router.post('/conferences/:id/unattend', auth.checkAuth, conference.unsubscribeConference);
 
 
 router.use(function(req, res, next) {
