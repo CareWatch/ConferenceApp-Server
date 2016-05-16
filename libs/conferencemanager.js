@@ -11,7 +11,7 @@ function getConferences() {
                 .input('SelectedPhotoTypeId', sql.Int, 1)
                 .execute('GetAllConferences')
                 .then(function (res) {
-                    deferred.resolve(res);
+                    deferred.resolve(res[0]);
                 })
                 .catch(function (err) {
                     deferred.reject(err);

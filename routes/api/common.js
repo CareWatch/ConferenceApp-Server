@@ -18,6 +18,13 @@ function otherError(err, req, res, next) {
 }
 
 
+function apiInfo(req, res, next) {
+    var responseMessage =  'Welcome to myconf.guru api.\nSupported methods are:\n/singup - user registration\n' +
+        '/login - login for registred users\n/conferences - list of all scheduled conferences/n' +
+        '/conferences/id - info about selected conference\n/speeches/id - info about selected speech';
+    res.json({success: true, message: responseMessage});
+}
+
 function createError(message, status) {
     var err = new Error(message);
     err.status = status;
@@ -28,5 +35,6 @@ function createError(message, status) {
 module.exports = {
     notFoundError: notFoundError,
     otherError: otherError,
-    createError: createError
+    createError: createError,
+    apiInfo: apiInfo
 };

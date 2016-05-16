@@ -7,7 +7,7 @@ function getSpeechInfo(req, res, next) {
     } else {
         speechmanager.getSpeechInfo(req.params.id)
             .then(function (data) {
-                res.json({success: true, message: data});
+                res.json({success: true, message: 'Information about speech: ' + req.params.id, speech: data});
             })
             .fail(function (err) {
                 if (err instanceof TypeError)

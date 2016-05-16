@@ -4,7 +4,7 @@ var common = require('./common');
 function getConferences (req, res, next) {
     confmanager.getConferences()
         .then(function (data) {
-            res.json({success: true, message: data[0]});
+            res.json({success: true, message: 'Scheduled conference list.', conferences: data});
         })
         .fail(function (err) {
             next(err);
@@ -17,7 +17,7 @@ function getConferenceInfo(req, res, next) {
     } else {
         confmanager.getConferenceInfo(req.params.id)
             .then(function (data) {
-                res.json({success: true, message: data});
+                res.json({success: true, message: 'Info about conference: ' + req.params.id, conference: data});
             })
             .fail(function (err) {
                 if (err instanceof TypeError)

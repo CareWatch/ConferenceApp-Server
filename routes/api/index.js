@@ -5,9 +5,7 @@ var conference = require('./conference');
 var speech = require('./speech');
 var common = require('./common');
 
-router.get('/', function(req, res) {
-    res.send('api test');
-});
+router.get('/', common.apiInfo);
 
 
 router.post('/signup', auth.register);
