@@ -34,7 +34,7 @@ function getConferenceInfo(conferenceId) {
                 .input('FilterPhotoTypeId', sql.Int, 1)
                 .execute('GetConferenceInfo')
                 .then(function (res) {
-                    var converted = convertSingleConferenceRecords(res);
+                    var converted = convertRecords(res);
                     if (!converted) {
                         deferred.reject(new TypeError('No conference with such id found in database'));
                     } else {
@@ -100,7 +100,7 @@ function removeConferenceAttender(userId, conferenceId) {
     return deferred.promise;
 }
 
-function convertSingleConferenceRecords(records) {
+function convertRecords(records) {
     var conference = {};
 
     if (records[0].length === 0) {
@@ -130,11 +130,11 @@ function convertSingleConferenceRecords(records) {
             speech.address = records[0][i].SpeechAddress;
             speech.start_time = records[0][i].SpeechStartTime;
             speech.end_time = records[0][i].SpeechEndTime;
-            speech.presenter = {};
-            speech.presenter.first_name = records[0][i].FirstName;
-            speech.presenter.last_name = records[0][i].LastName;
-            speech.presenter.id = records[0][i].UserId;
-            speech.presenter.photo_id = records[0][i].ProfilePhotoId;
+            speech.author = {};
+            speech.author.first_name = records[0][i].FirstName;
+            speech.author.last_name = records[0][i].LastName;
+            speech.author.id = records[0][i].UserId;
+            speech.author.photo_id = records[0][i].ProfilePhotoId;
             conference.scheduled_speeches.push(speech);
             tmp.push(records[0][i].SpeechId);
         }
