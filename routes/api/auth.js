@@ -5,17 +5,18 @@ var jwt = require('jsonwebtoken');
 var common = require('./common');
 
 function register (req, res, next){
-    if (!req.body.username || !req.body.password) {
-        next(common.createError('User login and password are required.', 401));
+    if (!req.body.username || !req.body.password || !req.body.firstname || !req.body.lastname || !req.body.email) {
+        next(common.createError('User username, password, first name, last name and email are required.', 401));
     } else {
-        var hash = bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10));
-        authmanager.addUser(req.body.username, hash)
+        var userinfo = createUserInfo(req);
+        authmanager.registerUser(userinfo)
             .then(function () {
                 res.status(201).json({success: true, message: 'User registration is completed.'});
             })
             .fail(function (err) {
-                if (err.code === 'EREQUEST') {
-                    next(common.createError('Username is already taken.', 422));
+                if (err instanceof TypeError)
+                {
+                    next(common.createError('Username is already taken: ' + req.params.username, 400));
                 } else {
                     next(err);
                 }
@@ -47,6 +48,20 @@ function login (req, res, next) {
             })
     }
 }
+
+function createUserInfo(req) {
+    var userinfo = {};
+    userinfo.usesrname = req.body.username;
+    userinfo.password = bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10));
+    userinfo.firstname = req.body.firstname;
+    userinfo.lastname = req.body.lastname;
+    userinfo.email = req.body.email;
+    userinfo.description = req.body.description;
+    userinfo.photoid = req.body.photoid;
+    return userinfo;
+}
+
+
 
 function chechAuth (req, res, next) {
     var token =  req.body.token || req.query.token || req.headers['x-access-token'];

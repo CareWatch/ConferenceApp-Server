@@ -39,8 +39,9 @@ function subscribe(req, res, next) {
                 res.status(200).json({success: true, message: 'Successfully added user to conference: ' + req.params.id});
             })
             .fail(function (err) {
-                if (err.code === 'EREQUEST') {
-                    next(common.createError('User info needs to be filled before applying any conference.' + req.params.id, 422));
+                if (err instanceof TypeError)
+                {
+                    next(common.createError('User info needs to be filled before applying any conference.', 422));
                 } else {
                     next(err);
                 }
@@ -57,7 +58,8 @@ function unsubscribe(req, res, next)  {
                 res.status(200).json({success: true, message: 'Successfully removed user from conference: '});
             })
             .fail(function (err) {
-                if (err.code === 'EREQUEST') {
+                if (err instanceof TypeError)
+                {
                     next(common.createError('User info needs to be filled before applying any conference.', 422));
                 } else {
                     next(err);

@@ -66,6 +66,10 @@ function addConferenceAttender(userId, conferenceId) {
                     deferred.resolve(res);
                 })
                 .catch(function (err) {
+                    if (err.code === 'EREQUEST')
+                    {
+                        deferred.reject(new TypeError('User info needs to be filled before applying any conference.'));
+                    }
                     deferred.reject(err);
                 })
         })
@@ -90,6 +94,10 @@ function removeConferenceAttender(userId, conferenceId) {
                     deferred.resolve(res);
                 })
                 .catch(function (err) {
+                    if (err.code === 'EREQUEST')
+                    {
+                        deferred.reject(new TypeError('User info needs to be filled before applying any conference.'));
+                    }
                     deferred.reject(err);
                 })
         })
