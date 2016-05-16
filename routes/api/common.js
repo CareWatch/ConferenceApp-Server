@@ -1,12 +1,12 @@
 var log = require('../../libs/logger')(module);
 
-function notFoundErr(req, res, next) {
+function notFoundError(req, res, next) {
     var err = new Error('Not Found');
     err.status = 404;
     next(err);
 }
 
-function otherErr(err, req, res, next) {
+function otherError(err, req, res, next) {
     if (err.status)
     {
         res.status(err.status).json({success: false, message: err.message});
@@ -26,7 +26,7 @@ function createError(message, status) {
 
 
 module.exports = {
-    notFoundErr: notFoundErr,
-    otherErr: otherErr,
+    notFoundError: notFoundError,
+    otherError: otherError,
     createError: createError
 };

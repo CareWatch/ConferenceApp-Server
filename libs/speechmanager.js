@@ -12,7 +12,7 @@ function getSpeechInfo(speechId) {
                 .execute('GetSpeechInfo')
                 .then(function (res) {
                     var converted = convertSingleSpeechRecords(res);
-                    if (converted === null) {
+                    if (!converted) {
                         deferred.reject(new TypeError('No speech with such id found in database'));
                     } else {
                         deferred.resolve(converted);

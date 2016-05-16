@@ -23,8 +23,8 @@ router.post('/conferences/:id/unattend', auth.checkAuth, conference.unsubscribeC
 router.get('/speeches/:id', speech.getSpeechInfo);
 
 
-router.use(common.notFoundErr);
-router.use(common.otherErr);
+router.use(common.notFoundError);
+router.use(common.otherError);
 
 
 module.exports = router;

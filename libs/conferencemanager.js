@@ -35,7 +35,7 @@ function getConferenceInfo(conferenceId) {
                 .execute('GetConferenceInfo')
                 .then(function (res) {
                     var converted = convertSingleConferenceRecords(res);
-                    if (converted === null) {
+                    if (!converted) {
                         deferred.reject(new TypeError('No conference with such id found in database'));
                     } else {
                         deferred.resolve(converted);
@@ -62,8 +62,8 @@ function addConferenceAttender(userId, conferenceId) {
                 .input('SelectedUserId', sql.Int, userId)
                 .input('SelectedUserRoleId', sql.Int, 1)
                 .execute('AddConferenceAttender')
-                .then(function (records) {
-                    deferred.resolve(records);
+                .then(function (res) {
+                    deferred.resolve(res);
                 })
                 .catch(function (err) {
                     deferred.reject(err);
@@ -86,8 +86,8 @@ function removeConferenceAttender(userId, conferenceId) {
                 .input('SelectedConferenceId', sql.Int, conferenceId)
                 .input('SelectedUserId', sql.Int, userId)
                 .execute('RemoveConferenceAttender')
-                .then(function (records) {
-                    deferred.resolve(records);
+                .then(function (res) {
+                    deferred.resolve(res);
                 })
                 .catch(function (err) {
                     deferred.reject(err);
