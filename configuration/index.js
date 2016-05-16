@@ -1,6 +1,7 @@
-var fs = require('fs'),
-    config = {},
-    appRoot = require('app-root-path');
+var fs = require('fs');
+var appRoot = require('app-root-path');
+var config = {};
+
 
 config.port = 3000;
 config.sslPort = 3001;
