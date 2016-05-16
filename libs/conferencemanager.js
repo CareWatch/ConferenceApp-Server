@@ -34,11 +34,10 @@ function getConferenceInfo(conferenceId) {
                 .input('FilterPhotoTypeId', sql.Int, 1)
                 .execute('GetConferenceInfo')
                 .then(function (res) {
-                    var converted = convertRecords(res);
+                    var converted = convertSingleConferenceRecords(res);
                     if (converted === null) {
                         deferred.reject(new TypeError('No conference with such id found in database'));
-                    }
-                    else {
+                    } else {
                         deferred.resolve(converted);
                     }
                 })
@@ -101,17 +100,14 @@ function removeConferenceAttender(userId, conferenceId) {
     return deferred.promise;
 }
 
-
-
-
-function convertRecords(records) {
+function convertSingleConferenceRecords(records) {
     var conference = {};
 
     if (records[0].length === 0) {
         return null;
     }
 
-    conference.conferenceId = records[0][0].ConferenceId;
+    conference.conference_id = records[0][0].ConferenceId;
     conference.title = records[0][0].Title;
     conference.status_description = records[0][0].StatusDescription;
     conference.description = records[0][0].Description;
@@ -128,7 +124,7 @@ function convertRecords(records) {
         }
         if (tmp.indexOf(records[0][i].SpeechId) === -1 && records[0][i].SpeechId != null) {
             var speech = {};
-            speech.id = records[0][i].SpeechId;
+            speech.speech_id = records[0][i].SpeechId;
             speech.title = records[0][i].SpeechTitle;
             speech.description = records[0][i].SpeechDescription;
             speech.address = records[0][i].SpeechAddress;

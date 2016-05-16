@@ -3,6 +3,7 @@ var router = express.Router();
 var auth = require('./auth');
 var conference = require('./conference');
 var log = require('../../libs/logger')(module);
+var speech = require('./speech');
 
 router.get('/', function(req, res) {
     res.send('api test');
@@ -21,6 +22,8 @@ router.post('/conferences/:id/attend', auth.checkAuth, conference.subscribeConfe
 
 router.post('/conferences/:id/unattend', auth.checkAuth, conference.unsubscribeConference);
 
+
+router.get('/speeches/:id', speech.getSpeechInfo);
 
 router.use(function(req, res, next) {
     var err = new Error('Not Found');

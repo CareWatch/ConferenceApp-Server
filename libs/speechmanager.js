@@ -8,15 +8,13 @@ function getSpeechInfo(speechId) {
     db.getConnection()
         .then(function (connection) {
             new connection.Request()
-                .input('SelectedConferenceId', sql.Int, conferenceId)
-                .input('FilterPhotoTypeId', sql.Int, 1)
-                .execute('GetConferenceInfo')
+                .input('SelectedSpeechId', sql.Int, speechId)
+                .execute('GetSpeechInfo')
                 .then(function (res) {
-                    var converted = convertRecords(res);
+                    var converted = convertSingleSpeechRecords(res);
                     if (converted === null) {
-                        deferred.reject(new TypeError('No conference with such id found in database'));
-                    }
-                    else {
+                        deferred.reject(new TypeError('No speech with such id found in database'));
+                    } else {
                         deferred.resolve(converted);
                     }
                 })
@@ -30,3 +28,23 @@ function getSpeechInfo(speechId) {
 
     return deferred.promise;
 }
+
+function convertSingleSpeechRecords(records) {
+    if (records[0].length !== 1){
+        return null;
+    }
+    var presenter = {};
+    presenter.id = records[0][0].presenter_id;
+    presenter.first_name = records[0][0].presenter_firstname;
+    presenter.last_name = records[0][0].presenter_lastname;
+    delete records[0][0].presenter_id;
+    delete records[0][0].presenter_firstname;
+    delete records[0][0].presenter_lastname;
+    records[0][0].presenter = presenter;
+    return records[0][0];
+}
+
+
+module.exports = {
+    getSpeechInfo: getSpeechInfo
+};
