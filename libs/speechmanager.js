@@ -37,9 +37,11 @@ function convertSingleSpeechRecords(records) {
     presenter.id = records[0][0].presenter_id;
     presenter.first_name = records[0][0].presenter_firstname;
     presenter.last_name = records[0][0].presenter_lastname;
+    presenter.photo_id = records[0][0].presenter_photoid;
     delete records[0][0].presenter_id;
     delete records[0][0].presenter_firstname;
     delete records[0][0].presenter_lastname;
+    delete records[0][0].presenter_photoid;
     records[0][0].presenter = presenter;
     return records[0][0];
 }

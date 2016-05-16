@@ -134,6 +134,7 @@ function convertSingleConferenceRecords(records) {
             speech.presenter.first_name = records[0][i].FirstName;
             speech.presenter.last_name = records[0][i].LastName;
             speech.presenter.id = records[0][i].UserId;
+            speech.presenter.photo_id = records[0][i].ProfilePhotoId;
             conference.scheduled_speeches.push(speech);
             tmp.push(records[0][i].SpeechId);
         }
