@@ -1,4 +1,4 @@
-var confmanager = require('../../libs/conferencesmanager');
+var confmanager = require('../../libs/conferencemanager');
 
 function getConferences (req, res, next) {
     confmanager.getConferences()

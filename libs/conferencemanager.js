@@ -111,23 +111,35 @@ function convertRecords(records) {
         return null;
     }
 
-    conference.ConferenceId = records[0][0].ConferenceId;
-    conference.Title = records[0][0].Title;
-    conference.StatusDescription = records[0][0].StatusDescription;
-    conference.Description = records[0][0].Description;
-    conference.CityName = records[0][0].CityName;
-    conference.Address = records[0][0].Address;
-    conference.StartDate = records[0][0].StartDate;
-    conference.EndDate = records[0][0].EndDate;
-    conference.PhotoIDs = [];
-    conference.SpeechIDs = [];
+    conference.conferenceId = records[0][0].ConferenceId;
+    conference.title = records[0][0].Title;
+    conference.status_description = records[0][0].StatusDescription;
+    conference.description = records[0][0].Description;
+    conference.city_name = records[0][0].CityName;
+    conference.address = records[0][0].Address;
+    conference.start_date = records[0][0].StartDate;
+    conference.end_date = records[0][0].EndDate;
+    conference.photos = [];
+    conference.scheduled_speeches = [];
+    var tmp = [];
     for (var i in records[0]) {
-        if (conference.PhotoIDs.indexOf(records[0][i].ConferencePhotoId) === -1 && records[0][i].ConferencePhotoId != null) {
-            conference.PhotoIDs.push(records[0][i].ConferencePhotoId);
+        if (conference.photos.indexOf(records[0][i].ConferencePhotoId) === -1 && records[0][i].ConferencePhotoId != null) {
+            conference.photos.push(records[0][i].ConferencePhotoId);
         }
-
-        if (conference.SpeechIDs.indexOf(records[0][i].SpeechId) === -1 && records[0][i].SpeechId != null) {
-            conference.SpeechIDs.push(records[0][i].SpeechId);
+        if (tmp.indexOf(records[0][i].SpeechId) === -1 && records[0][i].SpeechId != null) {
+            var speech = {};
+            speech.id = records[0][i].SpeechId;
+            speech.title = records[0][i].SpeechTitle;
+            speech.description = records[0][i].SpeechDescription;
+            speech.address = records[0][i].SpeechAddress;
+            speech.start_time = records[0][i].SpeechStartTime;
+            speech.end_time = records[0][i].SpeechEndTime;
+            speech.presenter = {};
+            speech.presenter.first_name = records[0][i].FirstName;
+            speech.presenter.last_name = records[0][i].LastName;
+            speech.presenter.id = records[0][i].UserId;
+            conference.scheduled_speeches.push(speech);
+            tmp.push(records[0][i].SpeechId);
         }
     }
     return conference;
