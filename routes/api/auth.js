@@ -1,12 +1,11 @@
 var authmanager = require('../../libs/authmanager'),
     bcrypt = require('bcrypt'),
-    log = require('../../libs/logger')(module),
     config = require('../../configuration'),
     jwt = require('jsonwebtoken');
 
 function register (req, res, next){
     if (!req.body.username || !req.body.password) {
-        res.status(400).json({success: false, message: 'User login and password are required.'});
+        next(CreateError('User login and password are required.', 401));
     } else {
         var hash = bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10));
         authmanager.addUser(req.body.username, hash)
@@ -15,10 +14,9 @@ function register (req, res, next){
             })
             .fail(function (err) {
                 if (err.code === 'EREQUEST') {
-                    res.status(422).json({success: false, message: 'Username is already taken.'});
+                    next(CreateError('Username is already taken.', 422));
                 } else {
-                    res.status(500).json({success: false, message: 'Internal server error.'});
-                    log(err);
+                    next(err);
                 }
             })
     }
@@ -26,7 +24,7 @@ function register (req, res, next){
 
 function login (req, res, next) {
     if (!req.body.username || !req.body.password) {
-        res.status(400).json({success: false, message: 'User login and password are required.'});
+        next(CreateError('User login and password are required.', 401));
     } else {
         authmanager.getPassHash(req.body.username)
             .then(function (data) {
@@ -35,20 +33,24 @@ function login (req, res, next) {
                     var usertoken = jwt.sign(data[0].UserId, config.jwtSecret);
                     res.status(201).json({success: true, message: 'Logged into account: ' + req.body.username, token: usertoken});
                 } else {
-                    res.status(403).json({success: false, message: 'Wrong password for user: ' + req.body.username});
+                    next(CreateError('Wrong password for user: ' + req.body.username, 401));
                 }
             })
             .fail(function (err) {
                 if (err instanceof TypeError)
                 {
-                    res.status(403).json({success: false, message: 'No user found with username: ' + req.body.username});
+                    next(CreateError('No user found with username: ' + req.body.username, 401));
                 } else {
-                    console.log(err);
-                    res.status(500).json({success: false, message: 'Internal server error.'});
-                    log.error(err);   
+                    next(err);
                 }
             })
     }
+}
+
+function CreateError(message, status) {
+    var err = new Error(message);
+    err.status = status;
+    return err;
 }
 
 module.exports = {

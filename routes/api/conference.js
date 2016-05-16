@@ -1,5 +1,4 @@
 var confmanager = require('../../libs/conferencesmanager'),
-    log = require('../../libs/logger')(module),
     jwt = require('jsonwebtoken'),
     config = require('../../configuration');
 
@@ -9,14 +8,13 @@ function getConferences (req, res, next) {
             res.json({success: true, message: data[0]});
         })
         .fail(function (err) {
-            res.status(500).json({success: false, message: 'Internal server error.'});
-            log.error(err);
+            next(err);
         });
 }
 
 function getConferenceInfo(req, res, next) {
     if (isNaN(req.params.id)) {
-        res.status(400).json({success: false, message: 'Wrong conference id.'});
+        next(CreateError('Wrong conference id.', 400));
     } else {
         confmanager.getConferenceInfo(req.params.id)
             .then(function (data) {
@@ -25,11 +23,10 @@ function getConferenceInfo(req, res, next) {
             .fail(function (err) {
                 if (err instanceof TypeError)
                 {
-                    res.status(400).json({success: false, message: 'No conference found with id: ' + req.params.id});
+                    next(CreateError('No conference found with id: ' + req.params.id, 400));
                 } else {
-                    res.status(500).json({success: false, message: 'Internal server error.'});
+                    next(err);
                 }
-                log.error(err);
             });
     }
 }
@@ -37,13 +34,13 @@ function getConferenceInfo(req, res, next) {
 function subscribeConference(req, res, next) {
     var token =  req.body.token || req.headers['x-access-token'];
     if (isNaN(req.params.id)) {
-        res.status(400).json({success: false, message: 'Wrong conference id.'});
+        next(CreateError('Wrong conference id. ' + req.params.id, 400));
     } else {
         if (token)
         {
             jwt.verify(token, config.jwtSecret, function (err, decodedUserId) {
                 if (err) {
-                    res.status(403).json({success: false, message: 'User authentication failed. Provide valid authtoken.'});
+                    next(CreateError('User authentication failed. Provide valid authtoken.' + req.params.id, 401));
                 } else {
                     confmanager.addConferenceAttender(decodedUserId, req.params.id)
                         .then(function () {
@@ -51,16 +48,15 @@ function subscribeConference(req, res, next) {
                         })
                         .fail(function (err) {
                             if (err.code === 'EREQUEST') {
-                                res.status(422).json({success: false, message: 'User info needs to be filled before applying any conference.'});
+                                next(CreateError('User info needs to be filled before applying any conference.' + req.params.id, 422));
                             } else {
-                                res.status(500).json({success: false, message: 'Internal server error.'});
-                                log(err);
+                                next(err);
                             }
                         })
                 }
             })
         } else {
-            res.status(403).json({success: false, message: 'User authtoken is required.'});
+            next(CreateError('User authtoken is required.', 403));
         }
     }
 }
@@ -68,13 +64,13 @@ function subscribeConference(req, res, next) {
 function unsubscribeConference(req, res, next)  {
     var token =  req.body.token || req.headers['x-access-token'];
     if (isNaN(req.params.id)) {
-        res.status(400).json({success: false, message: 'Wrong conference id.'});
+        next(CreateError('Wrong conference id. ' + req.params.id, 400));
     } else {
         if (token)
         {
             jwt.verify(token, config.jwtSecret, function (err, decodedUserId) {
                 if (err) {
-                    res.status(403).json({success: false, message: 'User authentication failed. Provide valid authtoken.'});
+                    next(CreateError('User authentication failed. Provide valid authtoken.' + req.params.id, 401));
                 } else {
                     confmanager.removeConferenceAttender(decodedUserId, req.params.id)
                         .then(function () {
@@ -82,18 +78,23 @@ function unsubscribeConference(req, res, next)  {
                         })
                         .fail(function (err) {
                             if (err.code === 'EREQUEST') {
-                                res.status(422).json({success: false, message: 'User info needs to be filled before applying any conference.'});
+                                next(CreateError('User info needs to be filled before applying any conference.' + req.params.id, 422));
                             } else {
-                                res.status(500).json({success: false, message: 'Internal server error.'});
-                                log(err);
+                                next(err);
                             }
                         })
                 }
             })
         } else {
-            res.status(403).json({success: false, message: 'User authtoken is required.'});
+            next(CreateError('User authtoken is required.', 403));
         }
     }
+}
+
+function CreateError(message, status) {
+    var err = new Error(message);
+    err.status = status;
+    return err;
 }
 
 module.exports = {
