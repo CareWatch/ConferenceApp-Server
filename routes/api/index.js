@@ -25,9 +25,9 @@ router.get('/speeches/:id/comments', speech.getComments);
 router.post('/speeches/:id/comments', auth.checkAuth, speech.addComment);
 
 
-router.get('/user/:id', user.getInfo);
+router.get('/users/:id', user.getInfo);
 
-router.get('/image/:id', image.getBinary);
+router.get('/images/:id', image.getBinary);
 
 router.use(common.notFoundError);
 router.use(common.otherError);
