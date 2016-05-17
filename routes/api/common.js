@@ -21,7 +21,9 @@ function otherError(err, req, res, next) {
 function apiInfo(req, res, next) {
     var responseMessage =  'Welcome to myconf.guru api.\nSupported methods are:\n/singup - user registration\n' +
         '/login - login for registred users\n/conferences - list of all scheduled conferences/n' +
-        '/conferences/id - info about selected conference\n/speeches/id - info about selected speech';
+        '/conferences/id - info about selected conference\n/speeches/id - info about selected speech' +
+        '\n/speeches/id/comments = comments for a selected speech\n/user/id - info about selected user' +
+        '\n/image/id - get image from database';
     res.json({success: true, message: responseMessage});
 }
 

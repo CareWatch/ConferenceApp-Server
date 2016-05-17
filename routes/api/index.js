@@ -5,6 +5,7 @@ var conference = require('./conference');
 var speech = require('./speech');
 var user = require('./user');
 var common = require('./common');
+var image = require('./image');
 
 router.get('/', common.apiInfo);
 
@@ -25,6 +26,8 @@ router.post('/speeches/:id/comments', auth.checkAuth, speech.addComment);
 
 
 router.get('/user/:id', user.getInfo);
+
+router.get('/image/:id', image.getBinary);
 
 router.use(common.notFoundError);
 router.use(common.otherError);
