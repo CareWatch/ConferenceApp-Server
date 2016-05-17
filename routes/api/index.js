@@ -3,6 +3,7 @@ var router = express.Router();
 var auth = require('./auth');
 var conference = require('./conference');
 var speech = require('./speech');
+var user = require('./user');
 var common = require('./common');
 
 router.get('/', common.apiInfo);
@@ -22,6 +23,8 @@ router.get('/speeches/:id', speech.getInfo);
 router.get('/speeches/:id/comments', speech.getComments);
 router.post('/speeches/:id/comments', auth.checkAuth, speech.addComment);
 
+
+router.get('/user/:id', user.getInfo);
 
 router.use(common.notFoundError);
 router.use(common.otherError);
