@@ -1,6 +1,7 @@
 # ConferenceApp API Backend
 
 Fast and light web server to manage mobile app requests. This API allows mobile users to manage their user accounts, get information about scheduled conferences in the specific city and share emotions about visited events. All responses are in json format.
+
 Android companion app is avaliable [here.](https://github.com/dbulgakov/ConferenceApp)
 
 
