@@ -36,27 +36,24 @@ function registerUser(userinfo) {
     return deferred.promise;
 }
 
-
-
-
-
 function getPassHash(username) {
     var deferred = q.defer();
 
     db.getConnection()
         .then(function (connection) {
-            var request = new connection.Request();
-            var command = "SELECT PasswordHash, UserId FROM UserCredentials WHERE UserLogin = '" + username + "'";
-            request.query(command, function (err, res) {
-                if (err) {
+            var request = new connection.Request()
+                .input('SelectedUsername', sql.VarChar, username)
+                .execute('GetPasswordHash')
+                .then(function (res) {
+                    if (res[0].length === 0)
+                    {
+                        deferred.reject(new TypeError('No user found with username' + username))
+                    }
+                    deferred.resolve(res[0][0]);
+                })
+                .catch(function (err) {
                     deferred.reject(err);
-                }
-                if (res.length === 1) {
-                    deferred.resolve(res);
-                } else {
-                    deferred.reject(new TypeError('No user found in database'));
-                }
-            });
+                })
         })
         .fail(function (err) {
             deferred.reject(err);

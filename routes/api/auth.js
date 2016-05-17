@@ -26,13 +26,13 @@ function register (req, res, next){
 
 function login (req, res, next) {
     if (!req.body.username || !req.body.password) {
-        next(common.createError('User login and password are required.', 401));
+        next(common.createError('User username and password are required.', 401));
     } else {
         authmanager.getPassHash(req.body.username)
             .then(function (data) {
-                if (bcrypt.compareSync(req.body.password, data[0].PasswordHash))
+                if (bcrypt.compareSync(req.body.password, data.PasswordHash))
                 {
-                    var usertoken = jwt.sign(data[0].UserId, config.jwtSecret);
+                    var usertoken = jwt.sign(data.UserId, config.jwtSecret);
                     res.status(201).json({success: true, message: 'Logged into account: ' + req.body.username, token: usertoken});
                 } else {
                     next(common.createError('Wrong password for user: ' + req.body.username, 401));
