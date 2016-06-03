@@ -16,14 +16,15 @@ router.post('/login', auth.login);
 
 router.get('/conferences', conference.getConferences);
 router.get('/conferences/:id', conference.getInfo);
+router.get('/conferences/:id/comments', conference.getComments);
+//router.post('/conferences/:id/comments', auth.checkAuth, conference.addComment);
+
+
 router.post('/conferences/:id/attend', auth.checkAuth, conference.subscribe);
 router.post('/conferences/:id/unattend', auth.checkAuth, conference.unsubscribe);
 
 
 router.get('/speeches/:id', speech.getInfo);
-router.get('/speeches/:id/comments', speech.getComments);
-router.post('/speeches/:id/comments', auth.checkAuth, speech.addComment);
-
 
 router.get('/users/:id', user.getInfo);
 

@@ -1,5 +1,6 @@
 var confmanager = require('../../libs/conferencemanager');
 var common = require('./common');
+var log = require('../../libs/logger')(module);
 
 function getConferences (req, res, next) {
     confmanager.getConferences()
@@ -68,10 +69,30 @@ function unsubscribe(req, res, next)  {
     }
 }
 
+function getComments(req, res, next) {
+    if (isNaN(req.params.id)) {
+        next(common.createError('Wrong conference id.', 400));
+    } else {
+        confmanager.getConferenceComments(req.params.id)
+            .then(function (data) {
+                res.json({success: true, message: 'Comments for conference: ' + req.params.id, comments: data});
+            })
+            .fail(function (err) {
+                if (err instanceof TypeError)
+                {
+                    next(common.createError('No conference found with id: ' + req.params.id, 400));
+                } else {
+                    next(err);
+                }
+            });
+    }
+}
+
 
 module.exports = {
     getConferences: getConferences,
     getInfo: getInfo,
     subscribe: subscribe,
-    unsubscribe: unsubscribe
+    unsubscribe: unsubscribe,
+    getComments: getComments
 };

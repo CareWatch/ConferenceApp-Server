@@ -10,7 +10,6 @@ function otherError(err, req, res, next) {
     if (err.status)
     {
         res.status(err.status).json({success: false, message: err.message});
-        //log.info(err);
     } else {
         res.status(500).json({success: false, message: 'Internal server error.'});
         log.error(err);

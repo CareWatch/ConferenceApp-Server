@@ -35,7 +35,7 @@ function getConferenceInfo(conferenceId) {
                 .input('SelectedConferenceId', sql.Int, conferenceId)
                 .execute('GetConferenceInfo')
                 .then(function (res) {
-                    var converted = convertRecords(res);
+                    var converted = convertInfoRecords(res);
                     if (!converted) {
                         deferred.reject(new TypeError('No conference with such id found in database'));
                     } else {
@@ -109,7 +109,7 @@ function removeConferenceAttender(userId, conferenceId) {
     return deferred.promise;
 }
 
-function convertRecords(records) {
+function convertInfoRecords(records) {
     var conference = {};
 
     if (records[0].length === 0) {
@@ -147,8 +147,7 @@ function convertRecords(records) {
             speech.author.id = records[0][i].UserId;
             if (records[0][i].ProfilePhotoId != null) {
                 speech.author.photo_id = records[0][i].ProfilePhotoId;
-            } else
-            {
+            } else {
                 speech.author.photo_id = configuration.defaultUserImageId;
             }
             conference.scheduled_speeches.push(speech);
@@ -158,10 +157,57 @@ function convertRecords(records) {
     return conference;
 }
 
+function convertCommentsRecords(records) {
+    for (var i in records[0]) {
+        var author = {};
+        author.id = records[0][i].author_id;
+        author.first_name = records[0][i].author_firstname;
+        author.last_name = records[0][i].author_lastname;
+        if (records[0][i].author_photoid != null) {
+            author.photo_id = records[0][i].author_photoid;
+        } else {
+            author.photo_id = configuration.defaultUserImageId;
+        }
+        
+        delete records[0][i].author_id;
+        delete records[0][i].author_firstname;
+        delete records[0][i].author_lastname;
+        delete records[0][i].author_photoid;
+        records[0][i].author = author;
+    }
+    return records[0];
+}
+
+
+
+function getConferenceComments(conferenceId) {
+    var deferred = q.defer();
+    db.getConnection()
+        .then(function (connection) {
+            new connection.Request()
+                .input('SelectedConferenceId', sql.Int, conferenceId)
+                .execute('getConferenceComments')
+                .then(function (res) {
+                    var converted = convertCommentsRecords(res);
+                    deferred.resolve(converted);
+                })
+                .catch(function (err) {
+                    deferred.reject(new TypeError('No conference with such id found in database'));
+                })
+        })
+        .fail(function (err) {
+            deferred.reject(err);
+        });
+
+    return deferred.promise;
+}
+
+
 
 module.exports = {
     getConferences : getConferences,
     getConferenceInfo : getConferenceInfo,
     addConferenceAttender : addConferenceAttender,
-    removeConferenceAttender : removeConferenceAttender
+    removeConferenceAttender : removeConferenceAttender,
+    getConferenceComments : getConferenceComments
 };
