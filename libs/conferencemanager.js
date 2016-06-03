@@ -147,6 +147,9 @@ function convertRecords(records) {
             speech.author.id = records[0][i].UserId;
             if (records[0][i].ProfilePhotoId != null) {
                 speech.author.photo_id = records[0][i].ProfilePhotoId;
+            } else
+            {
+                speech.author.photo_id = configuration.defaultUserImageId;
             }
             conference.scheduled_speeches.push(speech);
             tmp.push(records[0][i].SpeechId);

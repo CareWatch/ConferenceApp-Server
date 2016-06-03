@@ -19,11 +19,12 @@ config.sslCert = fs.readFileSync('/etc/ssl/keys/server.crt');
 config.sslPassphrase = '';
 */
 
-config.dbString = 'mssql://bulgakov:spgxq078l1T1SAsluCBP76Rk6d4dt1347Q803j2Z28VosMi2uF@appdbhost.ceml2u1mwzx0.eu-central-1.rds.amazonaws.com/ConferenceAppDB';
+config.dbString = '';
 config.jwtSecret = '';
 
 config.mainImageId = 1;
 config.extendedMainImageId = 2;
+config.defaultUserImageId = 11;
 
 module.exports = config;
 
