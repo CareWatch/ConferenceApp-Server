@@ -1,6 +1,8 @@
 var db = require('./dbmanager');
 var q = require('q');
 var sql = require('mssql');
+var configuration = require('../configuration');
+var log = require('../libs/logger')(module);
 
 function getConferences() {
     var deferred = q.defer();
@@ -31,7 +33,6 @@ function getConferenceInfo(conferenceId) {
         .then(function (connection) {
             new connection.Request()
                 .input('SelectedConferenceId', sql.Int, conferenceId)
-                .input('FilterPhotoTypeId', sql.Int, 1)
                 .execute('GetConferenceInfo')
                 .then(function (res) {
                     var converted = convertRecords(res);
@@ -123,13 +124,15 @@ function convertRecords(records) {
     conference.address = records[0][0].Address;
     conference.start_date = records[0][0].StartDate;
     conference.end_date = records[0][0].EndDate;
-    conference.photos = [];
     conference.scheduled_speeches = [];
     var tmp = [];
     for (var i in records[0]) {
-        if (conference.photos.indexOf(records[0][i].ConferencePhotoId) === -1 && records[0][i].ConferencePhotoId != null) {
-            conference.photos.push(records[0][i].ConferencePhotoId);
+        if (records[0][i].PhotoTypeId == configuration.mainImageId && records[0][i].ConferencePhotoId != null){
+            conference.main_image = records[0][i].ConferencePhotoId;
+        } else if (records[0][i].PhotoTypeId == configuration.extendedMainImageId){
+            conference.main_image_bigger = records[0][i].ConferencePhotoId;
         }
+
         if (tmp.indexOf(records[0][i].SpeechId) === -1 && records[0][i].SpeechId != null) {
             var speech = {};
             speech.speech_id = records[0][i].SpeechId;
@@ -142,7 +145,9 @@ function convertRecords(records) {
             speech.author.first_name = records[0][i].FirstName;
             speech.author.last_name = records[0][i].LastName;
             speech.author.id = records[0][i].UserId;
-            speech.author.photo_id = records[0][i].ProfilePhotoId;
+            if (records[0][i].ProfilePhotoId != null) {
+                speech.author.photo_id = records[0][i].ProfilePhotoId;
+            }
             conference.scheduled_speeches.push(speech);
             tmp.push(records[0][i].SpeechId);
         }
