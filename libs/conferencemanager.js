@@ -2,7 +2,6 @@ var db = require('./dbmanager');
 var q = require('q');
 var sql = require('mssql');
 var configuration = require('../configuration');
-var log = require('../libs/logger')(module);
 
 function getConferences() {
     var deferred = q.defer();
@@ -202,6 +201,38 @@ function getConferenceComments(conferenceId) {
     return deferred.promise;
 }
 
+function addConferenceComment(conferenceId, authorId, text) {
+    var deferred = q.defer();
+
+    db.getConnection()
+        .then(function (connection) {
+            var request = new connection.Request();
+            var time = new Date();
+            time.setHours(time.getHours() + 3);
+
+            request.input('SelectedConferenceId', sql.Int, conferenceId);
+            request.input('CommentAuthorId', sql.Int, authorId);
+            request.input('CommentTime', sql.DateTime, time);
+            request.input('CommentText', sql.NVarChar, text);
+            request.execute('AddConferenceComment')
+                .then(function (res) {
+                    deferred.resolve(res);
+                })
+                .catch(function (err) {
+                    if (err.code === 'EREQUEST')
+                    {
+                        deferred.reject(new TypeError('No conference with such id found in database'));
+                    }
+                    deferred.reject(err);
+                })
+        })
+        .fail(function (err) {
+            deferred.reject(err);
+        });
+
+    return deferred.promise;
+}
+
 
 
 module.exports = {
@@ -209,5 +240,6 @@ module.exports = {
     getConferenceInfo : getConferenceInfo,
     addConferenceAttender : addConferenceAttender,
     removeConferenceAttender : removeConferenceAttender,
-    getConferenceComments : getConferenceComments
+    getConferenceComments : getConferenceComments,
+    addConferenceComment: addConferenceComment
 };

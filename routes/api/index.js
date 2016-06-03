@@ -17,7 +17,7 @@ router.post('/login', auth.login);
 router.get('/conferences', conference.getConferences);
 router.get('/conferences/:id', conference.getInfo);
 router.get('/conferences/:id/comments', conference.getComments);
-//router.post('/conferences/:id/comments', auth.checkAuth, conference.addComment);
+router.post('/conferences/:id/comments', auth.checkAuth, conference.addComment);
 
 
 router.post('/conferences/:id/attend', auth.checkAuth, conference.subscribe);

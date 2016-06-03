@@ -88,11 +88,31 @@ function getComments(req, res, next) {
     }
 }
 
+function addComment(req, res, next) {
+    if (isNaN(req.params.id) || !req.body.text) {
+        next(common.createError('Wrong input data.', 400));
+    } else {
+        confmanager.addConferenceComment(req.params.id, req.body.userId, req.body.text)
+            .then(function () {
+                res.json({success: true, message: 'Successfully added comment.'});
+            })
+            .fail(function (err) {
+                if (err instanceof TypeError)
+                {
+                    next(common.createError('No conference found with id: ' + req.params.id, 400));
+                } else {
+                    next(err);
+                }
+            });
+    }
+}
+
 
 module.exports = {
     getConferences: getConferences,
     getInfo: getInfo,
     subscribe: subscribe,
     unsubscribe: unsubscribe,
-    getComments: getComments
+    getComments: getComments,
+    addComment: addComment
 };
