@@ -208,7 +208,7 @@ function addConferenceComment(conferenceId, authorId, text) {
         .then(function (connection) {
             var request = new connection.Request();
             var time = new Date();
-            time.setHours(time.getHours() + 3);
+            time.setHours(time.getHours());
 
             request.input('SelectedConferenceId', sql.Int, conferenceId);
             request.input('CommentAuthorId', sql.Int, authorId);
