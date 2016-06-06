@@ -27,17 +27,18 @@ Android companion app is avaliable [here.](https://github.com/dbulgakov/Conferen
 * **/POST** conferences/id/unattend — Removes user from conference attendees list 
 
 	**Supported parameters**: conference id, auth token
+	
+* **/GET** conferences/id/comments — Get all comments for a specific conference.
+
+	**Supported parameters**: conference id
+* **/POST** conferences/id/comments — Add new comments for a specific conference.
+
+	**Supported parameters**: conference id
 
 **Speeches:**
 * **/GET** speeches/id — Get information about specific speech.
 
 	**Supported parameters**: speech id.
-* **/GET** speeches/id/comments — Get all comments for a specific speech.
-
-	**Supported parameters**: speech id
-* **/POST** speeches/id/comments — Add new comments for a specific speech
-
-	**Supported parameters**: speech id
 
 **Users:**
 * **/GET** users/id — Get information about specific user.
