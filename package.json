@@ -27,5 +27,14 @@
     "type": "git",
     "url": "https://github.com/dbulgakov/ConferenceApp-Server"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "grunt": "^1.0.1",
+    "grunt-contrib-concat":         "*",
+    "grunt-contrib-uglify":         "*",
+    "grunt-contrib-watch":          "*",
+    "grunt-contrib-connect":        "*",
+    "grunt-contrib-jshint":         "*",
+    "matchdep":                     "*"
+  }
 }
