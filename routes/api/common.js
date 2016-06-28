@@ -1,3 +1,4 @@
+'use strict';
 var log = require('../../libs/logger')(module);
 
 function notFoundError(req, res, next) {

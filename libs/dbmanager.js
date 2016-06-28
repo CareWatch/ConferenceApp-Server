@@ -1,3 +1,4 @@
+'use strict';
 var sql = require('mssql');
 var q = require('q');
 var config = require('../configuration');

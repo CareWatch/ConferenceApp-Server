@@ -1,3 +1,4 @@
+'use strict';
 var fs = require('fs');
 var appRoot = require('app-root-path');
 var config = {};

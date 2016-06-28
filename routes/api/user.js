@@ -1,3 +1,4 @@
+'use strict';
 var usermanager = require('../../libs/usermanager');
 var common = require('./common');
 

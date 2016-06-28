@@ -1,3 +1,4 @@
+'use strict';
 var db = require('./dbmanager');
 var q = require('q');
 var sql = require('mssql');

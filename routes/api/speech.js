@@ -1,3 +1,4 @@
+'use strict';
 var speechmanager = require('../../libs/speechmanager');
 var common = require('./common');
 

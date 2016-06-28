@@ -1,3 +1,4 @@
+'use strict';
 var authmanager = require('../../libs/authmanager');
 var bcrypt = require('bcrypt');
 var config = require('../../configuration');

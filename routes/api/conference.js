@@ -1,3 +1,4 @@
+'use strict';
 var confmanager = require('../../libs/conferencemanager');
 var common = require('./common');
 var log = require('../../libs/logger')(module);
